@@ -28,6 +28,7 @@ func main() {
 		log.Fatalf("failed to create request: %s", err)
 	}
 
+	fmt.Printf("Making request to %s \n", url)
 	res, err := c.Do(req)
 	if err != nil {
 		log.Fatal(err)
