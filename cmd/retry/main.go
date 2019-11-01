@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gojektech/heimdall"
-	"github.com/gojektech/heimdall/hystrix"
+	"github.com/gojektech/heimdall/httpclient"
 )
 
 func main() {
@@ -23,16 +23,10 @@ func main() {
 	retrier := heimdall.NewRetrier(backoff)
 
 	// Create a new hystrix-wrapped HTTP client with the fallbackFunc as fall-back function
-	client := hystrix.NewClient(
-		hystrix.WithHTTPTimeout(10*time.Second),
-		hystrix.WithCommandName("MyCommand"),
-		hystrix.WithHystrixTimeout(10*time.Second),
-		hystrix.WithMaxConcurrentRequests(100),
-		hystrix.WithErrorPercentThreshold(20),
-		hystrix.WithSleepWindow(10),
-		hystrix.WithRequestVolumeThreshold(10),
-		hystrix.WithRetrier(retrier),
-		hystrix.WithRetryCount(3),
+	client := httpclient.NewClient(
+		httpclient.WithHTTPTimeout(10*time.Second),
+		httpclient.WithRetrier(retrier),
+		httpclient.WithRetryCount(3),
 	)
 
 	statusCodes := []int{http.StatusOK, http.StatusBadRequest, http.StatusInternalServerError}
