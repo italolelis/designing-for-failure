@@ -29,6 +29,7 @@ func main() {
 		httpclient.WithRetryCount(3),
 	)
 
+	fmt.Println("Making requests...")
 	statusCodes := []int{http.StatusOK, http.StatusBadRequest, http.StatusInternalServerError}
 	for i := 0; i <= 50; i++ {
 		url := fmt.Sprintf("https://httpstat.us/%d", statusCodes[rand.Intn(len(statusCodes))])
